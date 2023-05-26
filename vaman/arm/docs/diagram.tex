@@ -1,0 +1,127 @@
+\documentclass{article}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage{karnaugh-map}
+\usepackage{multimedia}
+\usepackage[none]{hyphenat}
+\usepackage{enumitem}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage{ragged2e}
+\usepackage{kvmap}
+\usepackage{karnaugh-map}
+\usepackage{multirow}
+\usepackage[english]{babel}
+\usepackage{caption}
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,automata,petri,positioning,calc}
+
+\usepackage{titlesec}
+\usepackage{amsmath}
+\usepackage{capt-of}
+\usepackage{circuitikz}
+\usetikzlibrary{shapes.geometric}
+\title{Implementation of Boolean Logic in Arduino
+using Vaman
+}
+\date{May 2023}
+\author{GUNA\\gunavardhan.nagamalla@gmail.com\\ FWC22123 IITH-Future Wireless Communications Assignment}
+\begin{document}
+\maketitle
+	\tableofcontents
+	
+	\pagebreak
+
+\section{Problem} 
+		(Gate EC-2021)\\
+Q.31. The propogation delays of the XOR gate, AND gate and multiplexer (MUX) in the circuit shown in the figure are 4 ns, 2 ns and 1 ns, respectively.\\
+\begin{figure}[h]
+  \input{figs/diagram.tex}
+  \caption{State diagram}
+  \label{fig:1}		
+  \end{figure}
+
+If all the inputs P, Q, R, S and T are applied simultaneously and held constant, the maximum propogation delay of the circuit is
+\begin{enumerate}
+	\item 3 ns \item 5 ns \item 6 ns \item 7 ns
+\end{enumerate}
+\section{Introduction}
+		In the given circuit, the output of first multiplexer can be considered as the input to the second multiplexer so that the second multiplexer can be analyzed using 7447 IC for the implementation of output (expression) of the second multplexer. Since the 7447 IC is just a seven segment display decoder, the output expression of the multiplexer can be given to the LSB representing pin (7) of the IC so that the output on the display will represent the required answer (0 or 1) with the inputs of the given circuit (P,Q,R,S,T) being given at random.
+\section{Components}
+
+\begin{table}[h]
+\centering
+\input{tables/table1.tex}
+\caption{Components}
+\label{table:Components}
+\end{table}
+
+		
+\section{Hardware}
+		\begin{enumerate}
+			\item Make Connections between the seven segment display in and the 7447 IC as shown in Table2.
+
+
+\begin{table}[h]
+\centering
+\input{tables/table2.tex}
+\caption{Components}
+\label{table:Components}
+\end{table}
+			\item Connect Vcc of the IC and COM of the dispaly to 5V and the GND pins of the IC and display to the Ground of arduino.
+		\end{enumerate}
+
+\section{Software}
+		\begin{enumerate}
+			\item Now make the connections as per Table3.
+
+\begin{table}[h]
+\centering
+\input{tables/table3.tex}
+\caption{Components}
+\label{table:Components}
+\end{table}
+			
+			\item In the truth table in Table4, P,Q,R,S,T are the inputs and Y is the output.
+
+\begin{table}[h]
+\centering
+\input{tables/table4.tex}
+\caption{Components}
+\label{table:Components}
+\end{table}
+	
+			\item The k map for this truth table will be a five variablek map. So, two k maps can be drawn with one map having one input variable as zero and the other k map having that input variable as one as shown below
+
+	\begin{karnaugh-map}[4][4][2][$T$][$S$][$R$][$Q$][$P$]   
+	     \minterms{6,14,22,30,31}    
+	     \autoterms[0]   
+             \implicant{6}{14}  
+             \implicant{22}{30}   
+             \implicant{31}{30}   
+             \end{karnaugh-map}			
+				
+		\item Since, 7447 is a Seven Segment Display decoder, A represents the LSB and D represents the MSB. So giving the input to A displys either 0 or 1 on the Display.
+			\item Since, the output of th mux is either 0 or 1, this output of mux i.e, Y can begiven as input to A of the 7447 IC so that the the output of the mux can be observed directly on the display.
+			\item The boolean expression for the output (Y) of the second mux with the inputs (P,Q,R,S,T) will be simplified as \ref{eq:1}
+				\begin{align}
+					{Y} &= {RS(T'+PQ)}
+					\label{eq:1}
+				\end{align}
+				\item The code below realizes the Boolean logic for A with y being the input to A.\\
+	
+\begin{tabularx}{1\textwidth} { 
+  | >{\centering\arraybackslash}X |}
+  \hline
+      https://github.com/GUNA5801/FWC/blob/main/vaman/arm/src/main.c\\
+  \hline
+\end{tabularx}
+\bibliographystyle{ieeetr}
+
+
+	\item Execute the above code and compare the results of output theoretically and practically.
+	\end{enumerate}
+\end{document}
