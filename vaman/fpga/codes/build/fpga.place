@@ -1,9 +1,0 @@
-Netlist_File: fpga.net Netlist_ID: SHA256:30dfb5563107588bc0704be80f7e898ec68ce6c1d140018e22e8cc869744b872
-Array size: 39 x 35 logic blocks
-
-#block name	x	y	subblk	block number
-#----------	--	--	------	------------
-$iopadmap$MainModule.q1	24	32	0	#0
-$iopadmap$MainModule.q2	30	32	0	#1
-$false		3	1	0	#2
-$true		2	1	0	#3
